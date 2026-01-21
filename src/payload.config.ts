@@ -7,6 +7,9 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Pages } from './collections/Pages'
+import { Header } from './globals/MainNav/config'
+import { Destinations } from './collections/Destinations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -14,11 +17,13 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     user: Users.slug,
+
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    theme: 'light',
   },
-  collections: [Users, Media],
+  collections: [Pages, Destinations, Users, Media],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -29,4 +34,5 @@ export default buildConfig({
   }),
   sharp,
   plugins: [],
+  globals: [Header],
 })
