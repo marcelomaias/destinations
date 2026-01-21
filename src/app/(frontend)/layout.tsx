@@ -3,7 +3,7 @@ import React from 'react'
 import { Roboto, Roboto_Slab } from 'next/font/google'
 
 import './globals.css'
-import { Header } from '@/components/Header/Header'
+import { Header } from '@/globals/Header/Header'
 
 const baseFont = Roboto({
   subsets: ['latin'],

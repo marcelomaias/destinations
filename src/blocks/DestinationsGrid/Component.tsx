@@ -6,14 +6,16 @@ import { MapPinCheckInside } from 'lucide-react'
 
 type Props = {
   showOnlyPopular?: boolean
+  maxItems?: number
 }
 
-export async function DestinationsGrid({ showOnlyPopular }: Props) {
+export async function DestinationsGrid({ showOnlyPopular, maxItems }: Props) {
   const payload = await getPayload({ config: configPromise })
 
   const { docs } = await payload.find({
     collection: 'destinations',
     where: showOnlyPopular ? { showOnPopularList: { equals: true } } : undefined,
+    limit: maxItems || undefined,
   })
 
   return (
@@ -27,7 +29,7 @@ export async function DestinationsGrid({ showOnlyPopular }: Props) {
           <Link
             key={destination.id}
             href={`/destinations/${destination.slug}`}
-            className="place-card w-full aspect-[4/6] bg-slate-400 relative flex justify-center text-center text-white items-end rounded-xl overflow-hidden pb-8"
+            className="place-card w-full aspect-4/6 bg-slate-400 relative flex justify-center text-center text-white items-end rounded-xl overflow-hidden pb-8"
           >
             {imageUrl && (
               <Image
@@ -41,11 +43,12 @@ export async function DestinationsGrid({ showOnlyPopular }: Props) {
       500px"
               />
             )}
-            <div className="z-10 pointer-none:">
-              <h3 className="text-lg md:text-2xl font-light [text-shadow:_2px_1px_3px_rgb(0_0_0_/_70%)]">
+            <div className="absolute inset-0 bg-black/50 pointer-events-none" />
+            <div className="z-10 pointer-events-none">
+              <h3 className="text-lg md:text-2xl font-light [text-shadow:2px_1px_3px_rgb(0_0_0/70%)]">
                 {destination.title}
               </h3>
-              <span className="flex justify-center items-center mt-2 text-sm md:text-lg font-light [text-shadow:_2px_1px_3px_rgb(0_0_0_/_70%)]">
+              <span className="flex justify-center items-center mt-2 text-sm md:text-lg font-light [text-shadow:2px_1px_3px_rgb(0_0_0/70%)]">
                 <MapPinCheckInside /> {destination.location}
               </span>
             </div>

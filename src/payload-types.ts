@@ -211,6 +211,10 @@ export interface Page {
           }
         | {
             showOnlyPopular?: boolean | null;
+            /**
+             * Leave empty to show all destinations
+             */
+            maxItems?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'destinationsGrid';
@@ -513,6 +517,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               showOnlyPopular?: T;
+              maxItems?: T;
               id?: T;
               blockName?: T;
             };
