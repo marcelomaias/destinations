@@ -2,14 +2,17 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-import { Header } from './globals/MainNav/config'
+import { Header } from './globals/Header/config'
 import { Destinations } from './collections/Destinations'
+import { Footer } from './globals/Footer/config'
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -33,6 +36,15 @@ export default buildConfig({
     url: process.env.DATABASE_URL || '',
   }),
   sharp,
-  plugins: [],
-  globals: [Header],
+
+  globals: [Header, Footer],
+  plugins: [
+    formBuilderPlugin({}),
+    seoPlugin({
+      collections: ['pages', 'destinations'],
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }) => `${doc.title}`,
+      generateDescription: ({ doc }) => doc.excerpt,
+    }),
+  ],
 })

@@ -4,6 +4,8 @@ import { Roboto, Roboto_Slab } from 'next/font/google'
 
 import './globals.css'
 import { Header } from '@/globals/Header/Header'
+import { Footer } from '@/globals/Footer/Component'
+import { PageAnimations } from '@/components/gsap/PageAnimations'
 
 const baseFont = Roboto({
   subsets: ['latin'],
@@ -22,15 +24,21 @@ export const metadata = {
   title: 'Payload Blank Template',
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
+export default async function RootLayout(props: {
+  children: React.ReactNode
+  params: { slug?: string }
+}) {
   const { children } = props
 
   return (
     <html lang="en" className={`${baseFont.variable} ${headingFont.variable}`}>
-      <body>
-        <Header />
-        {children}
-      </body>
+      <PageAnimations>
+        <body>
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </PageAnimations>
     </html>
   )
 }

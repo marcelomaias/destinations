@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
-import { getPageBySlug } from '@/utils/getPage'
+import { getPageBySlug } from '@/lib/getPage'
+import { generateMetadata } from './[slug]/page'
 
 import { RenderBlocks } from '@/components/RenderBlocks'
 
@@ -16,3 +17,5 @@ export default async function HomePage() {
     </>
   )
 }
+
+export { generateMetadata }

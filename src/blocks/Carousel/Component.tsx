@@ -9,13 +9,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import { Button } from '@/components/ui/button'
 
 export const CarouselBlock = ({ slides }: { slides: any[] }) => {
   return (
-    <Carousel className="w-full h-[600px]">
+    <Carousel className="w-full h-dvh mb-12">
       <CarouselContent>
         {slides?.map((slide, index) => (
-          <CarouselItem key={index} className="relative h-[600px] w-full">
+          <CarouselItem key={index} className="relative h-dvh w-full">
             {/* Using Next.js Image for 2026 performance standards */}
             <Image
               src={slide.image.url}
@@ -24,17 +25,18 @@ export const CarouselBlock = ({ slides }: { slides: any[] }) => {
               className="object-cover -z-10"
               priority={index === 0}
             />
-            <div className="flex flex-col justify-end h-full bg-black/40 text-white p-10">
-              <div className="max-w-[992px] mx-auto w-full">
-                <h2 className="text-6xl font-bold mb-2">{slide.heading}</h2>
-                <p className="text-xl mb-8">{slide.subheading}</p>
+            <div className="flex flex-col justify-end h-full bg-black/40 text-white p-10 pb-20">
+              <div className="container w-full">
+                <h2 className="text-4xl md:text-6xl lg:text-8xl font-bold leading-none">
+                  {slide.heading}
+                </h2>
+                <p className="text-xl block mt-0 mb-4">{slide.subheading}</p>
                 {slide.cta?.link && (
-                  <Link
-                    href={slide.cta.link}
-                    className="px-6 py-3 bg-white text-black font-semibold rounded-md"
-                  >
-                    {slide.cta.label || 'Learn More'}
-                  </Link>
+                  <Button asChild variant="secondary" className="">
+                    <Link href={slide.cta.link} className="">
+                      {slide.cta.label || 'Learn More'}
+                    </Link>
+                  </Button>
                 )}
               </div>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import type { Header } from '@/payload-types'
-import { getCachedGlobal } from '@/utils/getGlobals'
+import { getCachedGlobal } from '@/lib/getGlobals'
 import HeaderClient from './Header.client'
 
 export async function Header() {

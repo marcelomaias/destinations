@@ -9,7 +9,8 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-family: var(--font-heading);
 }
 
@@ -37,6 +38,33 @@ h3 {
   }
   ul {
     @apply list-disc;
+  }
+}
+
+.container {
+  @apply max-w-7xl mx-auto;
+}
+
+.showBackgroundImage {
+  background: #f8f9fb url(/images/topography.svg);
+}
+
+footer {
+  .payload-richtext {
+    h4 {
+      font-size: 16px;
+    }
+    p {
+      margin-top: 8px;
+      font-size: 16px;
+    }
+  }
+  ul {
+    margin-bottom: 60px;
+  }
+
+  .contact-info p {
+    line-height: 1.4;
   }
 }
 
@@ -245,4 +273,8 @@ h3 {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+:root {
+  /* --radius: 0; */
 }

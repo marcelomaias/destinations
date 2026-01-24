@@ -1,8 +1,12 @@
 import { CarouselBlock } from '@/blocks/Carousel/config'
+import { ContactFormBlock } from '@/blocks/ContactBlock/config'
 import { DestinationsGrid } from '@/blocks/DestinationsGrid/config'
 import { Heading } from '@/blocks/Heading/config'
 import { ImageBlock } from '@/blocks/ImageBlock/config'
+import { InfoCards } from '@/blocks/InfoCards/config'
 import { TextBlock } from '@/blocks/TextBlock/config'
+import { TextHeading } from '@/blocks/TextHeading/config'
+import { TextImage } from '@/blocks/TextImage/config'
 import type { CollectionConfig } from 'payload'
 import { slugField } from 'payload'
 
@@ -41,20 +45,16 @@ export const Pages: CollectionConfig = {
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [TextBlock, ImageBlock, CarouselBlock, Heading, DestinationsGrid],
-    },
-    {
-      name: 'seo',
-      type: 'group',
-      label: 'SEO',
-      fields: [
-        { name: 'metaTitle', type: 'text' },
-        { name: 'metaDescription', type: 'textarea' },
-        {
-          name: 'ogImage',
-          type: 'upload',
-          relationTo: 'media',
-        },
+      blocks: [
+        TextBlock,
+        ImageBlock,
+        CarouselBlock,
+        Heading,
+        DestinationsGrid,
+        TextHeading,
+        InfoCards,
+        TextImage,
+        ContactFormBlock,
       ],
     },
 

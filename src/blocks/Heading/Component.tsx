@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export function Heading({ image, title, subtitle, ctaText, ctaLink }: any) {
   return (
-    <section className="relative h-[40vh] w-full overflow-hidden">
+    <section className="relative h-[40vh] w-full overflow-hidden mb-12">
       {/* Background image */}
       {image && (
         <Image src={image.url} alt={image.alt || title} fill className="object-cover" priority />

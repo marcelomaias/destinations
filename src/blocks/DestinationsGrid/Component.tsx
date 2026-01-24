@@ -1,60 +1,42 @@
-import Link from 'next/link'
+// DestinationsGrid.tsx (SERVER)
+
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import Image from 'next/image'
-import { MapPinCheckInside } from 'lucide-react'
+import { PopularDestinationsLayout } from './PopularDestinationsLayout'
+import { AllDestinationsLayout } from './AllDestinationsLayout'
+import { DestinationsFilterClient } from './Component.client'
 
 type Props = {
   showOnlyPopular?: boolean
   maxItems?: number
+  currentSlug?: string
 }
 
-export async function DestinationsGrid({ showOnlyPopular, maxItems }: Props) {
+export async function DestinationsGrid({
+  showOnlyPopular,
+  maxItems,
+  currentSlug,
+}: Props) {
   const payload = await getPayload({ config: configPromise })
 
   const { docs } = await payload.find({
     collection: 'destinations',
-    where: showOnlyPopular ? { showOnPopularList: { equals: true } } : undefined,
+    where: showOnlyPopular
+      ? { showOnPopularList: { equals: true } }
+      : undefined,
     limit: maxItems || undefined,
+    depth: 2,
   })
 
-  return (
-    <section className="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-between overflow-hidden mt-8 w-full max-w-5xl mx-auto px-4">
-      {docs.map((destination) => {
-        const headingBlock = destination.layout?.find((block: any) => block.blockType === 'heading')
-        const imageUrl = (headingBlock as any)?.image?.url
-        const imageAlt = (headingBlock as any)?.image?.alt || destination.title
+  // ❗ EXACT LOGIC PRESERVED
+  if (showOnlyPopular || currentSlug === 'destinations') {
+    // ✅ Only /destinations gets filtering
+    if (currentSlug === 'destinations') {
+      return <DestinationsFilterClient destinations={docs} />
+    }
 
-        return (
-          <Link
-            key={destination.id}
-            href={`/destinations/${destination.slug}`}
-            className="place-card w-full aspect-4/6 bg-slate-400 relative flex justify-center text-center text-white items-end rounded-xl overflow-hidden pb-8"
-          >
-            {imageUrl && (
-              <Image
-                src={imageUrl}
-                alt={imageAlt}
-                fill
-                className="object-cover hover:scale-[1.2] transition-all"
-                sizes="
-      (max-width: 500px) 300px,
-      (max-width: 900px) 500px,
-      500px"
-              />
-            )}
-            <div className="absolute inset-0 bg-black/50 pointer-events-none" />
-            <div className="z-10 pointer-events-none">
-              <h3 className="text-lg md:text-2xl font-light [text-shadow:2px_1px_3px_rgb(0_0_0/70%)]">
-                {destination.title}
-              </h3>
-              <span className="flex justify-center items-center mt-2 text-sm md:text-lg font-light [text-shadow:2px_1px_3px_rgb(0_0_0/70%)]">
-                <MapPinCheckInside /> {destination.location}
-              </span>
-            </div>
-          </Link>
-        )
-      })}
-    </section>
-  )
+    return <PopularDestinationsLayout destinations={docs} />
+  }
+
+  return <AllDestinationsLayout destinations={docs} />
 }
