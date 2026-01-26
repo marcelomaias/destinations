@@ -20,13 +20,24 @@ export async function DestinationsGrid({ showOnlyPopular, maxItems, currentSlug 
 
   const { docs } = await payload.find({
     collection: 'destinations',
-    where: showOnlyPopular
-      ? {
-          showOnPopularList: {
-            equals: true,
+    where: {
+      and: [
+        {
+          _status: {
+            equals: 'published',
           },
-        }
-      : undefined,
+        },
+        ...(showOnlyPopular
+          ? [
+              {
+                showOnPopularList: {
+                  equals: true,
+                },
+              },
+            ]
+          : []),
+      ],
+    },
     limit: maxItems || 0,
     depth: 2,
   })

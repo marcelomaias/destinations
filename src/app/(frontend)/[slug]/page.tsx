@@ -48,16 +48,19 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
 
-  // Fetch all pages, selecting only the slug field for performance
   const pages = await payload.find({
     collection: 'pages',
     limit: 0,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
     select: {
       slug: true,
     },
   })
 
-  // Return an array of objects where each object contains the slug
   return pages.docs.map((doc) => ({
     slug: doc.slug,
   }))

@@ -7,13 +7,25 @@ import { TextHeading } from '@/blocks/TextHeading/config'
 import { TextImage } from '@/blocks/TextImage/config'
 import type { CollectionConfig } from 'payload'
 import { slugField } from 'payload'
+import { revalidateDestinations } from './hooks/revalidateDestinations'
 
 export const Destinations: CollectionConfig = {
   slug: 'destinations',
-
+  versions: {
+    maxPerDoc: 10,
+    drafts: {
+      validate: false,
+      autosave: {
+        interval: 100,
+      },
+    },
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug'],
+  },
+  hooks: {
+    afterChange: [revalidateDestinations],
   },
 
   access: {

@@ -14,6 +14,9 @@ export const getPageBySlug = cache(
         slug: {
           equals: slug,
         },
+        _status: {
+          equals: 'published',
+        },
       },
       limit: 1,
       pagination: false,

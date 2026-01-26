@@ -9,9 +9,19 @@ import { TextHeading } from '@/blocks/TextHeading/config'
 import { TextImage } from '@/blocks/TextImage/config'
 import type { CollectionConfig } from 'payload'
 import { slugField } from 'payload'
+import { revalidatePages } from './hooks/revalidatePages'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  versions: {
+    maxPerDoc: 10,
+    drafts: {
+      validate: false,
+      autosave: {
+        interval: 100,
+      },
+    },
+  },
 
   admin: {
     useAsTitle: 'title',
@@ -23,7 +33,7 @@ export const Pages: CollectionConfig = {
   },
 
   hooks: {
-    beforeChange: [],
+    afterChange: [revalidatePages],
   },
 
   fields: [

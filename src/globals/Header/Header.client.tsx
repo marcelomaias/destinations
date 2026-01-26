@@ -21,7 +21,6 @@ export default function HeaderClient({ headerData }: { headerData: Header }) {
 
   useGSAP(
     () => {
-      // Timeline works on ALL screen sizes now
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: 'body',
@@ -51,6 +50,14 @@ export default function HeaderClient({ headerData }: { headerData: Header }) {
           filter: 'invert(0)',
           transformOrigin: 'center center',
           duration: 1,
+        },
+        0,
+      )
+
+      tl.to(
+        '.hamburger',
+        {
+          '--bgHamburgerColor': '#000',
         },
         0,
       )

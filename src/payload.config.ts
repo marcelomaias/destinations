@@ -1,7 +1,7 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { buildConfig } from 'payload'
+import { BasePayload, buildConfig } from 'payload'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
@@ -54,4 +54,12 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
   ],
+
+  // onInit: async (payload: BasePayload) => {
+  //   await payload.update({
+  //     collection: 'destinations',
+  //     where: {},
+  //     data: { _status: 'published' },
+  //   })
+  // },
 })

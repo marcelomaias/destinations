@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { RenderBlocks } from '@/components/RenderBlocks'
 import { generateMeta } from '@/lib/generateMeta'
 import { getPageBySlug } from '@/lib/getPageBySlug'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
 // Define the shape to match Next.js 15 PageProps
 type Props = {
@@ -42,4 +44,25 @@ export async function generateMetadata({
   const page = await getPageBySlug('destinations', decodedSlug)
 
   return generateMeta({ doc: page })
+}
+
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise })
+
+  const destinations = await payload.find({
+    collection: 'destinations',
+    limit: 0,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
+    select: {
+      slug: true,
+    },
+  })
+
+  return destinations.docs.map((doc) => ({
+    slug: doc.slug,
+  }))
 }

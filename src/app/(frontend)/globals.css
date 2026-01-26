@@ -90,6 +90,8 @@ footer {
   margin: 0;
   overflow: visible;
   z-index: 100;
+
+  --bgHamburgerColor: #fff;
 }
 .hamburger:hover {
   opacity: 0.7;
@@ -100,7 +102,7 @@ footer {
 .hamburger.is-active .hamburger-inner,
 .hamburger.is-active .hamburger-inner::before,
 .hamburger.is-active .hamburger-inner::after {
-  background-color: #fff;
+  background-color: var(--bgHamburgerColor);
 }
 
 .hamburger-box {
@@ -120,7 +122,7 @@ footer {
 .hamburger-inner::after {
   width: 40px;
   height: 4px;
-  background-color: #fff;
+  background-color: var(--bgHamburgerColor);
   border-radius: 4px;
   position: absolute;
   transition-property: transform;

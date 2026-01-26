@@ -25,7 +25,7 @@ export function PageAnimations({ children }: { children: React.ReactNode }) {
                 autoAlpha: 1,
                 x: 0,
                 stagger: 0.05,
-                ease: 'power3.out',
+                // ease: 'power3.out',
                 scrollTrigger: {
                   trigger: section,
                   start: 'top bottom',
