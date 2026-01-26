@@ -24,8 +24,7 @@ export function PageAnimations({ children }: { children: React.ReactNode }) {
               {
                 autoAlpha: 1,
                 x: 0,
-                duration: 1,
-                stagger: 0.075,
+                stagger: 0.05,
                 ease: 'power3.out',
                 scrollTrigger: {
                   trigger: section,
@@ -43,15 +42,17 @@ export function PageAnimations({ children }: { children: React.ReactNode }) {
 
           gsap.fromTo(
             items,
-            { rotate: -180 },
+            { rotate: -180, x: -100 },
             {
               rotate: 0,
+              x: 0,
               stagger: 0.5,
               scrollTrigger: {
-                trigger: container,
+                trigger: '.stamp',
                 start: 'top bottom',
                 end: 'top 60%',
                 scrub: 1,
+                // markers: true,
               },
             },
           )
