@@ -1,3 +1,5 @@
+import React from 'react'
+import { Page } from '@/payload-types'
 import { TextBlock } from '@/blocks/TextBlock/Component'
 import { ImageBlock } from '@/blocks/ImageBlock/Component'
 import { CarouselBlock } from '@/blocks/Carousel/Component'
@@ -7,16 +9,13 @@ import { TextHeading } from '@/blocks/TextHeading/Component'
 import { InfoCardsBlock } from '@/blocks/InfoCards/Component'
 import { TextImageBlock } from '@/blocks/TextImage/Component'
 import { ContactFormBlock } from '@/blocks/ContactBlock/Component'
-// import { ImageTextBlock } from './blocks/ImageTextBlock'
-// import { FeatureGrid } from './blocks/FeatureGrid'
-// import { CallToAction } from './blocks/CallToAction'
 
 type RenderBlocksProps = {
-  blocks?: any[] | null
+  blocks?: Page['layout']
   currentSlug?: string
 }
 
-export function RenderBlocks({ blocks, currentSlug }: RenderBlocksProps) {
+export const RenderBlocks: React.FC<RenderBlocksProps> = ({ blocks, currentSlug }) => {
   if (!blocks || blocks.length === 0) return null
 
   return (
@@ -37,6 +36,7 @@ export function RenderBlocks({ blocks, currentSlug }: RenderBlocksProps) {
 
           case 'destinationsGrid':
             return <DestinationsGrid key={index} {...block} currentSlug={currentSlug} />
+
           case 'textHeading':
             return <TextHeading key={index} {...block} />
 
@@ -47,16 +47,7 @@ export function RenderBlocks({ blocks, currentSlug }: RenderBlocksProps) {
             return <TextImageBlock key={index} {...block} />
 
           case 'contactForm':
-            return <ContactFormBlock key={index} block={block} />
-
-          // case 'imageText':
-          //   return <ImageTextBlock key={index} {...block} />
-
-          // case 'featureGrid':
-          //   return <FeatureGrid key={index} {...block} />
-
-          // case 'callToAction':
-          //   return <CallToAction key={index} {...block} />
+            return <ContactFormBlock key={index} {...block} />
 
           default:
             return null

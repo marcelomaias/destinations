@@ -2,7 +2,7 @@ import type { Block } from 'payload'
 
 export const Heading: Block = {
   slug: 'heading',
-
+  interfaceName: 'HeadingBlockType',
   fields: [
     {
       name: 'image',

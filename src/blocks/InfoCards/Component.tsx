@@ -1,16 +1,8 @@
 import Image from 'next/image'
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import type { Media } from '@/payload-types'
+import type { InfoCardsBlockType } from '@/payload-types'
 
-type InfoCardsProps = {
-  card?: {
-    id?: string
-    icon?: Media | string
-    text?: any
-  }[]
-}
-
-export const InfoCardsBlock: React.FC<InfoCardsProps> = ({ card }) => {
+export const InfoCardsBlock: React.FC<InfoCardsBlockType> = ({ card }) => {
   if (!card?.length) return null
 
   return (

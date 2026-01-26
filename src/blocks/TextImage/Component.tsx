@@ -1,31 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import type { Media } from '@/payload-types'
+import type { TextImageBlockType } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 
-type TextImageBlockProps = {
-  layout?: 'text-image' | 'image-text'
-  showBackgroundImage?: boolean
-  textContent?: {
-    text?: any
-    author?: any
-    icon?: Media | string
-    cta?: {
-      label?: string
-      url?: string
-      newTab?: boolean
-    }
-  }
-  image?: Media | string
-}
-
-export function TextImageBlock({
+export const TextImageBlock: React.FC<TextImageBlockType> = ({
   layout = 'text-image',
   showBackgroundImage = true,
   textContent,
   image,
-}: TextImageBlockProps) {
+}) => {
   const imageFirst = layout === 'image-text'
 
   const mainImage = typeof image === 'object' ? image : null

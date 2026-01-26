@@ -12,31 +12,26 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { ArrowRightIcon } from 'lucide-react'
+import { Destination } from '@/payload-types'
 
 type Props = {
-  destinations: any[]
+  destinations: Destination[]
 }
 
-export function DestinationsFilterClient({ destinations }: Props) {
+export const DestinationsFilterClient: React.FC<Props> = ({ destinations }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const locations = useMemo(() => {
-    return Array.from(
-      new Set(destinations.map(d => d.location).filter(Boolean))
-    )
+    return Array.from(new Set(destinations.map((d) => d.location).filter(Boolean)))
   }, [destinations])
 
-  // 🔒 Validate param
   const rawLocation = searchParams.get('location')
-  const location =
-    rawLocation && locations.includes(rawLocation)
-      ? rawLocation
-      : 'all'
+  const location = rawLocation && locations.includes(rawLocation) ? rawLocation : 'all'
 
   const filteredDestinations = useMemo(() => {
     if (location === 'all') return destinations
-    return destinations.filter(d => d.location === location)
+    return destinations.filter((d) => d.location === location)
   }, [location, destinations])
 
   function onLocationChange(value: string) {
@@ -51,7 +46,6 @@ export function DestinationsFilterClient({ destinations }: Props) {
     router.replace(`?${params.toString()}`, { scroll: false })
   }
 
-  
   return (
     <>
       {/* FILTER */}
@@ -79,7 +73,6 @@ export function DestinationsFilterClient({ destinations }: Props) {
         </div>
       </div>
 
-      {/* EXISTING LAYOUT */}
       <PopularDestinationsLayout destinations={filteredDestinations} />
     </>
   )

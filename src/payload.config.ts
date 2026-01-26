@@ -5,6 +5,7 @@ import { buildConfig } from 'payload'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -45,6 +46,12 @@ export default buildConfig({
       uploadsCollection: 'media',
       generateTitle: ({ doc }) => `${doc.title}`,
       generateDescription: ({ doc }) => doc.excerpt,
+    }),
+    vercelBlobStorage({
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
   ],
 })

@@ -2,6 +2,7 @@ import type { Block } from 'payload'
 
 export const DestinationsGrid: Block = {
   slug: 'destinationsGrid',
+  interfaceName: 'DestinationsGridBlockType',
   labels: {
     singular: 'Destinations Grid',
     plural: 'Destinations Grids',

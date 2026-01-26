@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
 type FooterLink = {
   title?: string | null
@@ -9,7 +10,7 @@ type FooterLink = {
 type Props = {
   title?: string | null
   links?: FooterLink[] | null
-  text?: any
+  text?: SerializedEditorState | null
 }
 
 export function FooterColumn({ title, links, text }: Props) {

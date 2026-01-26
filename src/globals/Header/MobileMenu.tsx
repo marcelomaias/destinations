@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { useRef, useEffect } from 'react'
 import type { Header } from '@/payload-types'
+import Link from 'next/link'
 
 interface MobileMenuProps {
   isOpen: boolean
@@ -62,14 +63,14 @@ export default function MobileMenu({ isOpen, headerData, closeMenu }: MobileMenu
       className="fixed inset-0 w-full h-dvh bg-[rgba(0,0,0,0.95)] z-90 flex flex-col items-center justify-center md:hidden"
     >
       {allLinks.map((link, i) => (
-        <a
+        <Link
           key={i}
           href={link.path || '#'}
-          className="mobileLink text-white text-4xl leading-loose"
+          className="mobileLink font-semibold text-white text-4xl leading-loose font-heading"
           onClick={closeMenu}
         >
           {link.title}
-        </a>
+        </Link>
       ))}
     </div>
   )

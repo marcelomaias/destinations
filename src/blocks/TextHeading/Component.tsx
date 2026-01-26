@@ -1,4 +1,6 @@
-export function TextHeading({ heading, subheading }: any) {
+import { TextHeadingBlockType } from '@/payload-types'
+
+export const TextHeading: React.FC<TextHeadingBlockType> = ({ heading, subheading }) => {
   return (
     <section className="pb-4 container px-4">
       {subheading && <span className="uppercase text-sm">{subheading}</span>}

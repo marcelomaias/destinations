@@ -2,6 +2,7 @@ import type { Block } from 'payload'
 
 export const ContactFormBlock: Block = {
   slug: 'contactForm',
+  interfaceName: 'ContactFormBlockType',
   fields: [
     {
       name: 'heading',

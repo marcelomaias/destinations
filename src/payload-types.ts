@@ -145,186 +145,15 @@ export interface Page {
   pageType?: ('default' | 'home') | null;
   layout?:
     | (
-        | {
-            heading?: string | null;
-            content?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            image: string | Media;
-            caption?: string | null;
-            fullWidth?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            slides?:
-              | {
-                  image: string | Media;
-                  heading: string;
-                  subheading?: string | null;
-                  cta?: {
-                    label?: string | null;
-                    link?: string | null;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'carousel';
-          }
-        | {
-            image?: (string | null) | Media;
-            title?: string | null;
-            subtitle?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            ctaText?: string | null;
-            ctaLink?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'heading';
-          }
-        | {
-            showOnlyPopular?: boolean | null;
-            /**
-             * Leave empty to show all destinations
-             */
-            maxItems?: number | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'destinationsGrid';
-          }
-        | {
-            heading?: string | null;
-            subheading?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textHeading';
-          }
-        | {
-            card?:
-              | {
-                  icon?: (string | null) | Media;
-                  text?: {
-                    root: {
-                      type: string;
-                      children: {
-                        type: any;
-                        version: number;
-                        [k: string]: unknown;
-                      }[];
-                      direction: ('ltr' | 'rtl') | null;
-                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                      indent: number;
-                      version: number;
-                    };
-                    [k: string]: unknown;
-                  } | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'infoCards';
-          }
-        | {
-            layout?: ('text-image' | 'image-text') | null;
-            showBackgroundImage?: boolean | null;
-            textContent: {
-              text: {
-                root: {
-                  type: string;
-                  children: {
-                    type: any;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
-              author?: {
-                root: {
-                  type: string;
-                  children: {
-                    type: any;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              } | null;
-              icon?: (string | null) | Media;
-              cta?: {
-                label?: string | null;
-                url?: string | null;
-                newTab?: boolean | null;
-              };
-            };
-            image: string | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textImage';
-          }
-        | {
-            heading?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            form: string | Form;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'contactForm';
-          }
+        | TextBlockType
+        | ImageBlockType
+        | CarouselBlockType
+        | HeadingBlockType
+        | DestinationsGridBlockType
+        | TextHeadingBlockType
+        | InfoCardsBlockType
+        | TextImageBlockType
+        | ContactFormBlockType
       )[]
     | null;
   showInMenu?: boolean | null;
@@ -340,6 +169,43 @@ export interface Page {
   };
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextBlockType".
+ */
+export interface TextBlockType {
+  heading?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageBlockType".
+ */
+export interface ImageBlockType {
+  image: string | Media;
+  caption?: string | null;
+  fullWidth?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -359,6 +225,185 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarouselBlockType".
+ */
+export interface CarouselBlockType {
+  slides?:
+    | {
+        image: string | Media;
+        heading: string;
+        subheading?: string | null;
+        cta?: {
+          label?: string | null;
+          link?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'carousel';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeadingBlockType".
+ */
+export interface HeadingBlockType {
+  image?: (string | null) | Media;
+  title?: string | null;
+  subtitle?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  ctaText?: string | null;
+  ctaLink?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'heading';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DestinationsGridBlockType".
+ */
+export interface DestinationsGridBlockType {
+  showOnlyPopular?: boolean | null;
+  /**
+   * Leave empty to show all destinations
+   */
+  maxItems?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'destinationsGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextHeadingBlockType".
+ */
+export interface TextHeadingBlockType {
+  heading?: string | null;
+  subheading?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textHeading';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InfoCardsBlockType".
+ */
+export interface InfoCardsBlockType {
+  card?:
+    | {
+        icon?: (string | null) | Media;
+        text?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'infoCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextImageBlockType".
+ */
+export interface TextImageBlockType {
+  layout?: ('text-image' | 'image-text') | null;
+  showBackgroundImage?: boolean | null;
+  textContent: {
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    author?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    icon?: (string | null) | Media;
+    cta?: {
+      label?: string | null;
+      url?: string | null;
+      newTab?: boolean | null;
+    };
+  };
+  image: string | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textImage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactFormBlockType".
+ */
+export interface ContactFormBlockType {
+  heading?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  form: string | Form;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactForm';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -549,155 +594,13 @@ export interface Destination {
   slug: string;
   layout?:
     | (
-        | {
-            heading?: string | null;
-            content?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textBlock';
-          }
-        | {
-            image: string | Media;
-            caption?: string | null;
-            fullWidth?: boolean | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'imageBlock';
-          }
-        | {
-            slides?:
-              | {
-                  image: string | Media;
-                  heading: string;
-                  subheading?: string | null;
-                  cta?: {
-                    label?: string | null;
-                    link?: string | null;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'carousel';
-          }
-        | {
-            image?: (string | null) | Media;
-            title?: string | null;
-            subtitle?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            ctaText?: string | null;
-            ctaLink?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'heading';
-          }
-        | {
-            heading?: string | null;
-            subheading?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textHeading';
-          }
-        | {
-            card?:
-              | {
-                  icon?: (string | null) | Media;
-                  text?: {
-                    root: {
-                      type: string;
-                      children: {
-                        type: any;
-                        version: number;
-                        [k: string]: unknown;
-                      }[];
-                      direction: ('ltr' | 'rtl') | null;
-                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                      indent: number;
-                      version: number;
-                    };
-                    [k: string]: unknown;
-                  } | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'infoCards';
-          }
-        | {
-            layout?: ('text-image' | 'image-text') | null;
-            showBackgroundImage?: boolean | null;
-            textContent: {
-              text: {
-                root: {
-                  type: string;
-                  children: {
-                    type: any;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              };
-              author?: {
-                root: {
-                  type: string;
-                  children: {
-                    type: any;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              } | null;
-              icon?: (string | null) | Media;
-              cta?: {
-                label?: string | null;
-                url?: string | null;
-                newTab?: boolean | null;
-              };
-            };
-            image: string | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'textImage';
-          }
+        | TextBlockType
+        | ImageBlockType
+        | CarouselBlockType
+        | HeadingBlockType
+        | TextHeadingBlockType
+        | InfoCardsBlockType
+        | TextImageBlockType
       )[]
     | null;
   showOnPopularList?: boolean | null;
@@ -855,114 +758,15 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              heading?: T;
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              image?: T;
-              caption?: T;
-              fullWidth?: T;
-              id?: T;
-              blockName?: T;
-            };
-        carousel?:
-          | T
-          | {
-              slides?:
-                | T
-                | {
-                    image?: T;
-                    heading?: T;
-                    subheading?: T;
-                    cta?:
-                      | T
-                      | {
-                          label?: T;
-                          link?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        heading?:
-          | T
-          | {
-              image?: T;
-              title?: T;
-              subtitle?: T;
-              ctaText?: T;
-              ctaLink?: T;
-              id?: T;
-              blockName?: T;
-            };
-        destinationsGrid?:
-          | T
-          | {
-              showOnlyPopular?: T;
-              maxItems?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textHeading?:
-          | T
-          | {
-              heading?: T;
-              subheading?: T;
-              id?: T;
-              blockName?: T;
-            };
-        infoCards?:
-          | T
-          | {
-              card?:
-                | T
-                | {
-                    icon?: T;
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textImage?:
-          | T
-          | {
-              layout?: T;
-              showBackgroundImage?: T;
-              textContent?:
-                | T
-                | {
-                    text?: T;
-                    author?: T;
-                    icon?: T;
-                    cta?:
-                      | T
-                      | {
-                          label?: T;
-                          url?: T;
-                          newTab?: T;
-                        };
-                  };
-              image?: T;
-              id?: T;
-              blockName?: T;
-            };
-        contactForm?:
-          | T
-          | {
-              heading?: T;
-              form?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | TextBlockTypeSelect<T>;
+        imageBlock?: T | ImageBlockTypeSelect<T>;
+        carousel?: T | CarouselBlockTypeSelect<T>;
+        heading?: T | HeadingBlockTypeSelect<T>;
+        destinationsGrid?: T | DestinationsGridBlockTypeSelect<T>;
+        textHeading?: T | TextHeadingBlockTypeSelect<T>;
+        infoCards?: T | InfoCardsBlockTypeSelect<T>;
+        textImage?: T | TextImageBlockTypeSelect<T>;
+        contactForm?: T | ContactFormBlockTypeSelect<T>;
       };
   showInMenu?: T;
   menuLabel?: T;
@@ -979,6 +783,132 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextBlockType_select".
+ */
+export interface TextBlockTypeSelect<T extends boolean = true> {
+  heading?: T;
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageBlockType_select".
+ */
+export interface ImageBlockTypeSelect<T extends boolean = true> {
+  image?: T;
+  caption?: T;
+  fullWidth?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarouselBlockType_select".
+ */
+export interface CarouselBlockTypeSelect<T extends boolean = true> {
+  slides?:
+    | T
+    | {
+        image?: T;
+        heading?: T;
+        subheading?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeadingBlockType_select".
+ */
+export interface HeadingBlockTypeSelect<T extends boolean = true> {
+  image?: T;
+  title?: T;
+  subtitle?: T;
+  ctaText?: T;
+  ctaLink?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DestinationsGridBlockType_select".
+ */
+export interface DestinationsGridBlockTypeSelect<T extends boolean = true> {
+  showOnlyPopular?: T;
+  maxItems?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextHeadingBlockType_select".
+ */
+export interface TextHeadingBlockTypeSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InfoCardsBlockType_select".
+ */
+export interface InfoCardsBlockTypeSelect<T extends boolean = true> {
+  card?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextImageBlockType_select".
+ */
+export interface TextImageBlockTypeSelect<T extends boolean = true> {
+  layout?: T;
+  showBackgroundImage?: T;
+  textContent?:
+    | T
+    | {
+        text?: T;
+        author?: T;
+        icon?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              newTab?: T;
+            };
+      };
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactFormBlockType_select".
+ */
+export interface ContactFormBlockTypeSelect<T extends boolean = true> {
+  heading?: T;
+  form?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "destinations_select".
  */
 export interface DestinationsSelect<T extends boolean = true> {
@@ -989,98 +919,13 @@ export interface DestinationsSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        textBlock?:
-          | T
-          | {
-              heading?: T;
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageBlock?:
-          | T
-          | {
-              image?: T;
-              caption?: T;
-              fullWidth?: T;
-              id?: T;
-              blockName?: T;
-            };
-        carousel?:
-          | T
-          | {
-              slides?:
-                | T
-                | {
-                    image?: T;
-                    heading?: T;
-                    subheading?: T;
-                    cta?:
-                      | T
-                      | {
-                          label?: T;
-                          link?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        heading?:
-          | T
-          | {
-              image?: T;
-              title?: T;
-              subtitle?: T;
-              ctaText?: T;
-              ctaLink?: T;
-              id?: T;
-              blockName?: T;
-            };
-        textHeading?:
-          | T
-          | {
-              heading?: T;
-              subheading?: T;
-              id?: T;
-              blockName?: T;
-            };
-        infoCards?:
-          | T
-          | {
-              card?:
-                | T
-                | {
-                    icon?: T;
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        textImage?:
-          | T
-          | {
-              layout?: T;
-              showBackgroundImage?: T;
-              textContent?:
-                | T
-                | {
-                    text?: T;
-                    author?: T;
-                    icon?: T;
-                    cta?:
-                      | T
-                      | {
-                          label?: T;
-                          url?: T;
-                          newTab?: T;
-                        };
-                  };
-              image?: T;
-              id?: T;
-              blockName?: T;
-            };
+        textBlock?: T | TextBlockTypeSelect<T>;
+        imageBlock?: T | ImageBlockTypeSelect<T>;
+        carousel?: T | CarouselBlockTypeSelect<T>;
+        heading?: T | HeadingBlockTypeSelect<T>;
+        textHeading?: T | TextHeadingBlockTypeSelect<T>;
+        infoCards?: T | InfoCardsBlockTypeSelect<T>;
+        textImage?: T | TextImageBlockTypeSelect<T>;
       };
   showOnPopularList?: T;
   meta?:

@@ -1,5 +1,5 @@
 'use client'
-import { Page, Form } from '@/payload-types'
+import { Form, ContactFormBlockType } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { useState } from 'react'
 
@@ -7,9 +7,7 @@ import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-
-type ContactProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'contactForm' }>
+import { Send } from 'lucide-react'
 
 type FormState = {
   loading: boolean
@@ -35,7 +33,7 @@ type InputFormField = Extract<
   }
 >
 
-export function ContactFormBlock({ block }: { block: ContactProps }) {
+export const ContactFormBlock: React.FC<ContactFormBlockType> = ({ form, heading }) => {
   const [formState, setFormState] = useState<FormState>({
     loading: false,
     error: null,
@@ -44,7 +42,7 @@ export function ContactFormBlock({ block }: { block: ContactProps }) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!block.form || typeof block.form !== 'object') return
+    if (!form || typeof form !== 'object') return
 
     setFormState({ loading: true, error: null, success: false })
 
@@ -55,7 +53,7 @@ export function ContactFormBlock({ block }: { block: ContactProps }) {
       const response = await fetch('/api/form-submissions', {
         method: 'POST',
         body: JSON.stringify({
-          form: block.form.id,
+          form: form.id,
           submissionData: Object.entries(data)?.map(([field, value]) => ({
             field,
             value: value as string,
@@ -79,13 +77,16 @@ export function ContactFormBlock({ block }: { block: ContactProps }) {
 
   return (
     <>
-      {typeof block?.form === 'object' && block?.form?.title === 'Contact' && (
-        <section id="contact" className="contactSection py-12">
-          <div className="container flex gap-8">
-            <div className="flex-1">{block.heading && <RichText data={block.heading} />}</div>
+      {typeof form === 'object' && form?.title === 'Contact' && (
+        <section id="contact" className="my-4 lg:my-20">
+          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12 container px-4">
+            <div className="flex-1 text-center">
+              {heading && <RichText data={heading} />} <br />
+              <Send size={128} className="mx-auto" />
+            </div>
             <div className="flex-1">
-              <form className="grid gap-4" onSubmit={handleSubmit}>
-                {block.form.fields?.map((field) => {
+              <form className="grid gap-4 md:pr-28" onSubmit={handleSubmit}>
+                {form.fields?.map((field) => {
                   const inputField = field as InputFormField
                   if (!('name' in field)) return null
 
@@ -116,17 +117,19 @@ export function ContactFormBlock({ block }: { block: ContactProps }) {
                 })}
 
                 {formState.error && (
-                  <p className="text-destructive text-sm font-medium">{formState.error}</p>
+                  <div className="px-4 py-2 h-[46px] flex items-center bg-red-800 text-red-300 rounded-md">
+                    <p className="text-sm font-medium">There was an error.</p>
+                  </div>
                 )}
 
                 {formState.success ? (
-                  <div className="confirmationMessage p-4 bg-primary/10 rounded-md">
-                    <RichText data={block.form.confirmationMessage!} />
+                  <div className="px-4 py-2 h-[46px] flex items-center bg-green-900 text-green-300 rounded-md">
+                    <RichText data={form.confirmationMessage!} />
                   </div>
                 ) : (
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 h-[46px]">
                     <Button type="submit" disabled={formState.loading}>
-                      {block.form.submitButtonLabel || 'Submit'}
+                      {form.submitButtonLabel || 'Submit'}
                     </Button>
                     {formState.loading && (
                       <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />

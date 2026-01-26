@@ -1,79 +1,64 @@
 import type { Metadata } from 'next'
-import React, { cache } from 'react'
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
 import { generateMeta } from '@/lib/generateMeta'
-import { draftMode } from 'next/headers'
+import { RenderBlocks } from '@/components/RenderBlocks'
+import { getPageBySlug } from '@/lib/getPageBySlug'
+import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
-import { RenderBlocks } from '@/components/RenderBlocks'
+// Define the exact shape Next.js 15 expects for dynamic routes
+type Props = {
+  params: Promise<{ slug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function Page({ params, searchParams }: Props) {
+  // Await the params Promise to extract the slug
+  const { slug } = await params
 
-  const payload = await getPayload({ config: await config })
+  // Await searchParams even if not used to satisfy TypeScript constraints
+  const {} = await searchParams
 
-  const result = await payload.find({
-    collection: 'pages',
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-    limit: 1,
-    depth: 2, // Populate relationships (like form in ContactBlock)
-  })
-
-  const page = result.docs[0]
+  const page = await getPageBySlug('pages', slug)
 
   if (!page) {
     notFound()
   }
 
-  // console.log('PAGE: ', page)
-
   return (
-    <>
-      <main>
-        <RenderBlocks blocks={page.layout} currentSlug={slug} />
-      </main>
-    </>
+    <main>
+      <RenderBlocks blocks={page.layout} currentSlug={slug} />
+    </main>
   )
 }
 
 export async function generateMetadata({
-  params: paramsPromise,
+  params,
 }: {
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const { slug = 'home' } = await paramsPromise
+  const { slug = 'home' } = await params
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
-  const page = await queryPageBySlug({
-    slug: decodedSlug,
-  })
+  const page = await getPageBySlug('pages', decodedSlug)
 
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
-  // const { isEnabled: draft } = await draftMode()
-
+export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
 
-  const result = await payload.find({
+  // Fetch all pages, selecting only the slug field for performance
+  const pages = await payload.find({
     collection: 'pages',
-    // draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: true,
-    where: {
-      slug: {
-        equals: slug,
-      },
+    limit: 0,
+    select: {
+      slug: true,
     },
   })
 
-  return result.docs?.[0] || null
-})
+  // Return an array of objects where each object contains the slug
+  return pages.docs.map((doc) => ({
+    slug: doc.slug,
+  }))
+}

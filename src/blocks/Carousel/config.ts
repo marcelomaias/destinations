@@ -2,6 +2,7 @@ import type { Block } from 'payload'
 
 export const CarouselBlock: Block = {
   slug: 'carousel',
+  interfaceName: 'CarouselBlockType',
   labels: {
     singular: 'Carousel',
     plural: 'Carousels',

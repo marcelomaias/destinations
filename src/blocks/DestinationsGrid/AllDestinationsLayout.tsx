@@ -1,11 +1,14 @@
-// components/destinations/AllDestinationsLayout.tsx
-
 import Link from 'next/link'
 import Image from 'next/image'
 import { CircleArrowRight } from 'lucide-react'
 import { extractPlainTextFromRichText } from '@/lib/extractPlainTextFromRichText'
+import { DestinationsGridBlockType, Destination, Media } from '@/payload-types'
 
-export function AllDestinationsLayout({ destinations }: { destinations: any[] }) {
+interface AllDestinationsLayoutProps extends Partial<DestinationsGridBlockType> {
+  destinations: Destination[]
+}
+
+export const AllDestinationsLayout: React.FC<AllDestinationsLayoutProps> = ({ destinations }) => {
   return (
     <section className="all-destinations container relative grid grid-cols-1 sm:grid-cols-2 gap-8 mt-4 mb-18 w-full px-4">
       <Image
@@ -15,13 +18,22 @@ export function AllDestinationsLayout({ destinations }: { destinations: any[] })
         className="stamp absolute -top-[238px] md:-top-[246px] right-10 w-[128px] h-[128px] md:w-[230px] md:h-[230px]"
         alt="Stamp image."
       />
-      {destinations.map((destination) => {
-        const headingBlock = destination.layout?.find((block: any) => block.blockType === 'heading')
+      {destinations?.map((destination) => {
+        const headingBlock = destination.layout?.find((block) => block.blockType === 'heading') as
+          | Extract<NonNullable<Destination['layout']>[number], { blockType: 'heading' }>
+          | undefined
 
-        const textBlock = destination.layout?.find((block: any) => block.blockType === 'textBlock')
+        const textBlock = destination.layout?.find((block) => block.blockType === 'textBlock') as
+          | Extract<NonNullable<Destination['layout']>[number], { blockType: 'textBlock' }>
+          | undefined
 
-        const imageUrl = headingBlock?.image?.url
-        const imageAlt = headingBlock?.image?.alt || destination.title
+        const headerImage =
+          headingBlock?.image && typeof headingBlock.image === 'object'
+            ? (headingBlock.image as Media)
+            : null
+
+        const imageUrl = headerImage?.url
+        const imageAlt = headerImage?.alt || destination.title
 
         const { text: previewText, truncated } = extractPlainTextFromRichText(
           textBlock?.content,

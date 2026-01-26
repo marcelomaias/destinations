@@ -14,6 +14,10 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+.font-heading {
+font-family: var(--font-heading)
+}
+
 html,
 body,
 #app {

@@ -34,7 +34,8 @@ export default function HeaderClient({ headerData }: { headerData: Header }) {
       tl.to(
         navRef.current,
         {
-          backgroundColor: 'rgba(0, 0, 0, 0.95)',
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          color: '#000',
           boxShadow: '0 0 8px rgba(0, 0, 0, 0.4)',
           paddingTop: '0.1rem',
           paddingBottom: '0.1rem',
@@ -47,6 +48,7 @@ export default function HeaderClient({ headerData }: { headerData: Header }) {
         logoRef.current,
         {
           scale: 0.8,
+          filter: 'invert(0)',
           transformOrigin: 'center center',
           duration: 1,
         },
@@ -80,9 +82,9 @@ export default function HeaderClient({ headerData }: { headerData: Header }) {
           {/* Desktop Nav*/}
           <nav className="hidden md:flex gap-8">
             {headerData?.headerLinks?.map((link, index) => (
-              <a key={index} href={link.path || '#'}>
+              <Link key={index} href={link.path || '#'} className="uppercase font-semibold">
                 {link.title}
-              </a>
+              </Link>
             ))}
           </nav>
 

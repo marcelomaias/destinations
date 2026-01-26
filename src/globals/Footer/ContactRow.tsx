@@ -1,18 +1,21 @@
 import Image from 'next/image'
 import type { Media } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
 type Props = {
   icon?: Media | string | null
-  text?: any
+  text?: SerializedEditorState | null
 }
 
 export function ContactRow({ icon, text }: Props) {
   if (!icon && !text) return null
 
+  const isPopulatedMedia = icon && typeof icon === 'object' && 'url' in icon
+
   return (
     <div className="flex items-center gap-3 contact-info">
-      {icon && typeof icon !== 'string' && icon.url && (
+      {isPopulatedMedia && icon.url && (
         <Image
           src={icon.url}
           alt={icon.alt || ''}
