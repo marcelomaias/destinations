@@ -49,7 +49,10 @@ export const DestinationsFilterClient: React.FC<Props> = ({ destinations }) => {
   return (
     <>
       {/* FILTER */}
-      <div className="container flex justify-end items-center w-full">
+      <div className="container flex justify-end items-center w-full px-4">
+        <div className="mr-auto">
+          Showing <h2 className="inline-block mx-1">{location}</h2> destinations
+        </div>
         <div className="flex justify-end gap-2 shrink-0 uppercase text-sm">
           Filter by location <ArrowRightIcon />
         </div>

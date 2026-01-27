@@ -32,7 +32,7 @@ export const CarouselBlock: React.FC<CarouselBlockType> = ({ slides }) => {
               )}
               <div className="flex flex-col justify-end h-full bg-black/40 text-white p-10 pb-20">
                 <div className="container w-full">
-                  <h2 className="text-4xl md:text-6xl lg:text-8xl font-bold leading-none">
+                  <h2 className="text-4xl md:text-6xl lg:text-8xl font-bold leading-tight text-balance">
                     {slide.heading}
                   </h2>
                   <p className="text-xl block mt-0 mb-4">{slide.subheading}</p>

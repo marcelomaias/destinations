@@ -20,11 +20,18 @@ export const CarouselBlock: Block = {
           type: 'upload',
           relationTo: 'media',
           required: true,
+          admin: {
+            description: 'Max file size 600KB | Max file dimensions 2000x1200px',
+          },
         },
         {
           name: 'heading',
           type: 'text',
           required: true,
+          maxLength: 36,
+          admin: {
+            description: 'Max 36 characters for best display.',
+          },
         },
         {
           name: 'subheading',

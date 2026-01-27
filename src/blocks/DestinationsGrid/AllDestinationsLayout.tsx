@@ -61,7 +61,7 @@ export const AllDestinationsLayout: React.FC<AllDestinationsLayoutProps> = ({ de
               <h3 className="text-2xl md:text-4xl font-normal">{destination.title}</h3>
 
               {previewText && (
-                <p className="max-w-[500px] mt-2 leading-relaxed">
+                <p className="max-w-[500px] text-sm md:text-base my-0 md:mt-2 leading-relaxed text-balance">
                   {previewText}
                   {truncated && '…'}
                 </p>

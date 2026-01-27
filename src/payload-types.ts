@@ -209,6 +209,8 @@ export interface ImageBlockType {
   blockType: 'imageBlock';
 }
 /**
+ * Max file size 600KB | Max file dimensions 2000x1200px
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -234,7 +236,13 @@ export interface Media {
 export interface CarouselBlockType {
   slides?:
     | {
+        /**
+         * Max file size 600KB | Max file dimensions 2000x1200px
+         */
         image: string | Media;
+        /**
+         * Max 36 characters for best display.
+         */
         heading: string;
         subheading?: string | null;
         cta?: {
