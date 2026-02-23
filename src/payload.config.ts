@@ -25,7 +25,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    theme: 'light',
+    // theme: 'light',
   },
   collections: [Pages, Destinations, Users, Media],
   editor: lexicalEditor(),
