@@ -1,6 +1,6 @@
 # Destinations
 
-A modern travel content platform built with [Payload CMS](https://payloadcms.com/) and [Next.js](https://nextjs.org/). Editors can manage travel destinations through a clean admin interface, while visitors enjoy a fast, beautiful front-end experience — with no code required for content updates.
+A modern travel content platform built with [Payload CMS](https://payloadcms.com/) and [Next.js](https://nextjs.org/). Editors can manage travel destinations through a clean admin interface, while visitors enjoy a fast, beautiful front-end experience.
 
 ---
 
@@ -53,24 +53,6 @@ Each page is built using a drag-and-drop block layout — no templates are hardc
 ![Page editor with block layout](https://raw.githubusercontent.com/marcelomaias/destinations/main/public/screenshots/Admin_Page.png)
 
 ---
-
-## Page Builder Blocks
-
-Every page is assembled from a library of flexible content blocks:
-
-- **Carousel** — Full-screen hero slideshow with headings, subheadings, and CTA buttons
-- **Heading** — Full-width banner with background image, title, subtitle, and optional CTA
-- **Text Block** — Rich prose content powered by a Lexical editor
-- **Text + Image** — Side-by-side layout with configurable order (text-first or image-first), optional background texture, author attribution, and CTA
-- **Text Heading** — Section label with heading and subheading
-- **Image Block** — Standalone image, optionally full-width, with optional caption
-- **Info Cards** — A row of icon + text cards (up to 4), ideal for highlights or features
-- **Destinations Grid** — Embeds the destinations list anywhere on a page, with options to show only popular destinations or cap the number shown
-- **Contact Form** — Renders a managed Payload form with submission handling and custom confirmation messages
-
----
-
-## More Features
 
 ### 📬 Contact Form
 
